@@ -1,4 +1,4 @@
-# recess-comments-snippet
+# Recess Comments Widget (Alpha)
 
 ![recess widget screenshot](recess-widget.png)
 
