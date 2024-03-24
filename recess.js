@@ -229,7 +229,7 @@
 
 
     // first see if the post exists in Recess and create the input box
-    fetch(`https://us.recessfeed.com/api/posts?post_url=${encodeURIComponent(window.location.href)}`)
+    fetch(`https://us.recessfeed.com/api/posts?post_url=${encodeURIComponent(`${window.location.origin}${window.location.pathname}`)}`)
         .then(response => response.json())
         .then(data => {
             if (data.length > 0) {
