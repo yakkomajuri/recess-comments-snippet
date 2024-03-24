@@ -1,0 +1,22 @@
+{
+  "name": "recess-comments-snippet",
+  "version": "1.0.0",
+  "description": "",
+  "main": "recess.js",
+  "scripts": {
+    "minify": "terser --compress --mangle --output recess.min.js -- recess.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yakkomajuri/recess-comments-snippet.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yakkomajuri/recess-comments-snippet/issues"
+  },
+  "homepage": "https://github.com/yakkomajuri/recess-comments-snippet#readme",
+  "dependencies": {
+    "terser": "^5.29.2"
+  }
+}
