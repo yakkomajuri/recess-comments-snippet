@@ -235,22 +235,24 @@
             if (data.length > 0) {
                 postUuid = data[0].post_uuid
                 displayCommentInputBox()
+
+                // then fetch the comments for the post.
+                // technically here we already have the post UUID but the way we want this is such that if different 
+                // feeds reference the same post URL we aggregate all comments
+                fetch(`https://us.recessfeed.com/api/post_comments?post_url=${encodeURIComponent(window.location.href)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.length > 0) {
+                        postUuid = data[0].post
+                        displayComments(data)
+                    }
+                })
+                .catch(error => console.error('Error fetching comments:', error))
             }
         })
         .catch(error => console.error('Error fetching comments:', error))
 
 
 
-    // then fetch the comments for the post.
-    // technically here we already have the post UUID but the way we want this is such that if different 
-    // feeds reference the same post URL we aggregate all comments
-    fetch(`https://us.recessfeed.com/api/post_comments?post_url=${encodeURIComponent(window.location.href)}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.length > 0) {
-                postUuid = data[0].post
-                displayComments(data)
-            }
-        })
-        .catch(error => console.error('Error fetching comments:', error))
+
 })();
