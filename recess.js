@@ -145,30 +145,6 @@
             return
         }
 
-        recessDiv.innerHTML = ''
-
-        var commentBoxContainer = document.createElement('div')
-
-        var commentBoxHtml = `
-            <div class="recess-comment-input-container">
-                <textarea rows="4" class="recess-comment-textarea" id="post-recess-comment-textarea" placeholder="Write a comment..." maxLength="1000"></textarea>
-                <button onclick="handleSubmitComment()" class="submit-recess-comment-button">Add Comment</button>
-            </div>
-        `
-
-        commentBoxContainer.innerHTML = commentBoxHtml
-
-
-        window.handleSubmitComment = function () {
-            const commentText = document.getElementById('post-recess-comment-textarea').value
-
-            window.location = `https://app.recessfeed.com/post/${postUuid}?comment_text=${encodeURIComponent(commentText)}`
-        }
-
-        recessDiv.appendChild(commentBoxContainer)
-
-
-
         comments.forEach(comment => {
             const commentContainer = document.createElement('div')
             commentContainer.className = 'recess-comment-container'
@@ -221,8 +197,53 @@
     }
 
 
+    function displayCommentInputBox () {
+        const recessDiv = document.getElementById('recess')
+        if (!recessDiv) {
+            console.error('"recess" div not found. Please ensure your page includes a div with id="recess".')
+            return
+        }
+
+        recessDiv.innerHTML = ''
+
+        var commentBoxContainer = document.createElement('div')
+
+        var commentBoxHtml = `
+            <div class="recess-comment-input-container">
+                <textarea rows="4" class="recess-comment-textarea" id="post-recess-comment-textarea" placeholder="Write a comment..." maxLength="1000"></textarea>
+                <button onclick="handleSubmitComment()" class="submit-recess-comment-button">Add Comment</button>
+            </div>
+        `
+
+        commentBoxContainer.innerHTML = commentBoxHtml
 
 
+        window.handleSubmitComment = function () {
+            const commentText = document.getElementById('post-recess-comment-textarea').value
+            window.location = `https://app.recessfeed.com/post/${postUuid}?comment_text=${encodeURIComponent(commentText)}`
+        }
+
+        recessDiv.appendChild(commentBoxContainer)
+
+    }
+
+
+    // first see if the post exists in Recess and create the input box
+    fetch(`https://us.recessfeed.com/api/posts?post_url=${encodeURIComponent(window.location.href)}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.length > 0) {
+                postUuid = data[0].post_uuid
+                displayCommentInputBox()
+            }
+        })
+        .catch(error => console.error('Error fetching comments:', error))
+
+
+
+    // then fetch the comments for the post.
+    // technically here we already have the post UUID but the way we want this is such that if different 
+    // feeds reference the same post URL we aggregate all comments
     fetch(`https://us.recessfeed.com/api/post_comments?post_url=${encodeURIComponent(window.location.href)}`)
         .then(response => response.json())
         .then(data => {
