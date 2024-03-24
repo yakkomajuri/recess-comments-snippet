@@ -1,5 +1,7 @@
 # recess-comments-snippet
 
+![recess widget screenshot](recess-widget.png)
+
 ## use on your website
 
 Include the following inside your `<head>` tags:
