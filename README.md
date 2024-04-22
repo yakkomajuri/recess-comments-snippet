@@ -1,5 +1,7 @@
 # Recess Comments Widget (Alpha)
 
+A "serverless" comments widget for personal websites and blogs using [Recess](https://github.com/yakkomajuri/recess).
+
 ![recess widget screenshot](recess-widget.png)
 
 ## use on your website
